@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block cards %}
+<div id="product-list">
+  <div class="container mb-4">
+    <div class="text-center bg-body-secondary p-4 rounded">
+      <h2 class="fw-bold">{{ category.name }} Products</h2>
+      <p class="opacity-75">Shop from our wide range of {{ category.name }}!</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      {% for product in products %}
+      <div class="col-md-4 my-3">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+            <p class="fw-bold text-primary">₹{{ product.price }}</p>
+            <a href="#" class="btn btn-outline-primary w-100">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <p>No products found in this category.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

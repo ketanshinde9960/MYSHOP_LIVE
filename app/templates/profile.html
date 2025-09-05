@@ -1,0 +1,146 @@
+{% extends "base.html" %} {% block body %}
+<div class="container">
+  <div class="main-body">
+    <div class="row gutters-sm my-4">
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img
+                src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                alt="Admin"
+                class="rounded-circle"
+                width="150"
+              />
+              <div class="mt-3">
+                <h4>{{user_data.username}}</h4>
+                <p class="text-secondary mb-1">{{user_data.email}}</p>
+                <div class="mt-2">
+                  <button class="btn btn-primary">Follow</button>
+                  <a href="{% url 'logout' %}" class="btn btn-outline-primary">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Username</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user_data.username}}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">First Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {{user_data.first_name}} 
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Last Name</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                 {{user_data.last_name}}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Email</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">{{user_data.email}}</div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Mobile</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {% if user_address %} 
+                    {{user_address.mobile}} 
+                {% else %} 
+                    No mobile 
+                {% endif %}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Address</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {% if user_address %} 
+                    {{user_address.address}} 
+                {% else %} 
+                    No Address 
+                {% endif %}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">City</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {% if user_address %} 
+                    {{user_address.city}} 
+                {% else %} 
+                    No city
+                {% endif %}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">State</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {% if user_address %} 
+                    {{user_address.state}} 
+                {% else %} 
+                    No state
+                {% endif %}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">Postel Code</h6>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                {% if user_address %}
+                    {{user_address.zip_code}}
+                {% else %}
+                    No zip code
+                {% endif %}
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-12">
+                <a
+                  class="btn btn-info"
+                  target="__blank"
+                  href="{% url 'profile-edit' %}"
+                  >see details</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

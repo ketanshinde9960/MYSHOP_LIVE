@@ -1,0 +1,82 @@
+{% extends "base.html" %} {% block body %}
+<!-- cart content -->
+<section id="cards" class="mt-4">
+  <!-- title & subTitle -->
+  <div class="container mb-4">
+    <div class="text-center bg-body-secondary p-5 rounded">
+      <h1 class="fw-bold">Your Orders</h1>
+      <p class="opacity-75">Placed order Collection by '{{user.username}}'</p>
+    </div>
+  </div>
+  <!-- content -->
+  <div class="container">
+    <div class="row d-flex justify-content-center flex-wrap gap-3">
+      {% if order_items %} {% for order_item in order_items %}
+      <div class="card p-3 position-relative" style="width: 18rem">
+        <img
+          src="{{ order_item.product.image.url }}"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ order_item.product.name }}</h5>
+          <p class="card-text">{{ order_item.product.description }}</p>
+          <p clas="card-text">Price : ₹{{order_item.product.price}}</p>
+          <p class="cart-text">Quantity : {{order_item.quantity}}</p>
+          {% comment %} <p class="cart-text">Sub-total: ₹{{order_item.sub_total}}</p> {% endcomment %}
+          <div class="d-grid gap-1 mb-2">
+            <button
+              class="btn btn-primary"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapseExample{{order_item.id}}"
+              aria-expanded="false"
+              aria-controls="collapseExample"
+            >
+              Order Detail
+            </button>
+          </div>
+          <div class="collapse" id="collapseExample{{order_item.id}}">
+            <div class="card card-body">
+                <p class="text-danger">Ordered On: <span class="text-dark-emphasis">{{ order_item.ordered_on }}</span></p>
+                {% for item in order_items %}
+                {% if order_item.id == item.id %}
+                <p class="text-danger">Order ID: <span class="text-dark-emphasis">{{ item.order.pk }}</span></p>
+                <!-- Display address information for the order -->
+                {% for address in addresses %} 
+                <p class="text-danger">Username: <span class="text-dark-emphasis">{{ address.username }}</span></p>
+                <p class="text-danger">Email: <span class="text-dark-emphasis">{{ address.email }}</span></p>
+                <p class="text-danger">Address: <span class="text-dark-emphasis">{{ address.address }}</span></p>
+                <p class="text-danger">City: <span class="text-dark-emphasis">{{ address.city }}</span> </p>
+                <p class="text-danger">State: <span class="text-dark-emphasis">{{ address.state }}</span></p>
+                <p class="text-danger">Zip Code: <span class="text-dark-emphasis">{{ address.zip_code }}</span></p>
+                {% endfor %} 
+                {% endif %}
+                {% endfor %}
+                
+                
+                <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="container my-4">
+        <h3 class="text-center p-3 border shadow">No Orders picked yet.</h3>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <!--cart main -->
+  <div class="container my-4">
+    <div class="text-center bg-body-secondary p-5 rounded">
+      <div class="d-flex flex-wrap justify-content-center gap-2 mx-auto mt-2">
+        <a href="/" class="btn btn-primary btn-lg" type="button"
+          >Continue to Shopping</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- cart content -->
+{% endblock body %}

@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block body %}
+<section class="h-100 background-color: #f8f9fa;
+">
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center my-4">
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Cart - {{ cart_items_count }} items</h5>
+            </div>
+            <div class="card-body">
+                {% if cart_items %}
+                {% for cart_item in cart_items %}
+              <!-- Single item -->
+              <div class="row">
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                  <!-- Image -->
+                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="{{ cart_item.product.image.url }}"
+                      class="w-100" alt="Blue Jeans Jacket" />
+                    <a href="#!">
+                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                  </div>
+                  <!-- Image -->
+                </div>
+  
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                  <!-- Data -->
+                  <p><strong>{{cart_item.product.name}}</strong></p>
+                  <p>{{cart_item.product.description}}</p>
+                  <p>{{cart_item.product.category}}</p>
+                 
+                  <div class="d-flex mt-2">
+                      <form method="POST"  action="{% url 'delete-checkout-item' cart_item.id %}" class="d-flex gap-2">
+                          {% csrf_token %}
+                          <button class="btn btn-primary btn-sm me-1 mb-2" type="submit" title="Remove item from cart"><i class="fas fa-trash"></i></button>
+                        </form>
+                        <form method="POST"  action="{% url 'move-to-wishlist' cart_item.id %}" class="d-flex gap-2">
+                            {% csrf_token %}
+                            <button  class="btn btn-danger btn-sm mb-2" type="submit" title="Move to the wish list"> <i class="fas fa-heart"></i></button>
+                        </form>
+                    </div>
+                  <!-- Data -->
+                </div>
+  
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                  <!-- Quantity -->
+                  <div class="d-flex mb-4" style="max-width: 300px">
+                    <form method="POST"  action="{% url 'update-checkout' cart_item.id %}" class="d-flex">
+                        {% csrf_token %}
+                        <button class="btn btn-primary px-3 me-2"
+                        type="submit"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    
+                        <div class="form-outline">
+                            <input id="form1" min="0" max="10" name="quantity" value="{{cart_item.quantity}}" type="number" class="form-control"/>
+                        </div>
+                    
+                        <button class="btn btn-primary px-3 ms-2"
+                        type="submit"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                        </button>
+                    </form>
+                  </div>
+                  <!-- Quantity -->
+  
+                  <!-- Price -->
+                  <h4 class="text-start text-md-center">
+                    <strong>₹{{cart_item.product.price}}</strong>
+                    <h5>sub-total: ₹{{cart_item.sub_total}}</h5>
+                  </h4>
+                  <!-- Price -->
+                </div>
+              </div>
+              <!-- Single item -->
+              <hr class="my-4" />
+                {% endfor %}
+                {% endif %}  
+            </div>
+          </div>
+
+
+          <div class="card mb-4">
+            <div class="card-body">
+              <p><strong>Expected Delivery Address</strong></p>
+             <form class="row g-3" method="POST" action="{% url 'user-address' %}">
+  {% csrf_token %}
+  
+  <div class="col-md-6">
+    <label for="inputEmail4" class="form-label">Email</label>
+    <input type="email" name="email" class="form-control" id="inputEmail4" required>
+  </div>
+
+  <div class="col-md-6">
+    <label for="inputUsername" class="form-label">Username</label>
+    <input type="text" name="username" class="form-control" id="inputUsername4" required>
+  </div>
+
+  <!-- ✅ Mobile number field added -->
+  <div class="col-md-6">
+    <label for="inputMobile" class="form-label">Mobile Number</label>
+    <input type="text" name="mobile" class="form-control" id="inputMobile" required>
+  </div>
+
+  <div class="col-12">
+    <label for="inputAddress" class="form-label">Address</label>
+    <input type="text" name="address" class="form-control" id="inputAddress" placeholder="1234 Main Station.." required>
+  </div>
+
+  <div class="col-md-6">
+    <label for="inputCity" class="form-label">City</label>
+    <input type="text" name="city" class="form-control" id="inputCity" placeholder="city" required>
+  </div>
+
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" name="state" class="form-select" required>
+      <option selected>Maharashtra</option>
+      <option>Goa</option>
+      <option>Gujarat</option>
+      <option>Delhi</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Zip</label>
+    <input type="number" name="zip_code" class="form-control" id="inputZip" required>
+  </div>
+
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck" required>
+      <label class="form-check-label" for="gridCheck">
+        Confirm address is correct
+      </label>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+            </div>
+          </div>
+
+          <div class="card mb-4 mb-lg-0">
+            <div class="card-body">
+              <p><strong>We accept</strong></p>
+              <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                alt="Visa" />
+              <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                alt="American Express" />
+              <img class="me-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                alt="Mastercard" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Summary</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    Products
+                    <span>prices</span>
+                  </li>
+                {% if cart_items %}
+                {% for cart_item in cart_items  %} 
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  {{cart_item.product.name}}
+                  <span>₹{{cart_item.sub_total}}</span>
+                </li>
+                {% endfor %}
+                {% endif %}
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  Shipping
+                  <span>Free Delivery</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                  <div>
+                    <strong>Total amount:</strong>
+                    <strong>
+                      <p class="mb-0">(including GST)</p>
+                    </strong>
+                  </div>
+                  <span><strong>₹{{total_cart_value}}</strong></span>
+                </li>
+              </ul>
+              <form method="GET" action="{% url 'move-to-order' %}" class="d-flex gap-2">
+
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                  checkout
+                </button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock body %}
+
+
+

@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block body %}
+
+<div class="container mt-5">
+    <form class="col-6 p-3 mx-auto card shadow-lg needs-validation" method="POST" novalidate>
+        {% csrf_token %}
+        <h2>Register Page</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">First Name</label>
+          <div class="valid-feedback">
+            please enter valid good name!
+          </div>
+          <input type="text" name="first_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          <div class="invalid-feedback">
+            Please provide a fist name.
+          </div>
+          <div class="valid-feedback">
+            correct!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Last Name</label>
+          <input type="text" name="last_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          <div class="invalid-feedback">
+            Please provide a last name.
+          </div>
+          <div class="valid-feedback">
+            Correct!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          <div class="invalid-feedback">
+            Please provide a valid username.
+          </div>
+          <div class="valid-feedback">
+            correct!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          <div class="invalid-feedback">
+            Please provide a valid email.
+          </div>
+          <div class="valid-feedback">
+            correct!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+          <div class="invalid-feedback">
+            Please provide a valid password.
+          </div>
+          <div class="valid-feedback">
+            correct!
+          </div>
+        </div>
+        <div class="mb-2">
+            <p>
+              Already have an account <a
+                href="{% url 'login' %}"
+                style="color: #0d6efd"
+              >
+                login here.</a
+              >
+            </p>
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+</div>
+
+{% endblock %}

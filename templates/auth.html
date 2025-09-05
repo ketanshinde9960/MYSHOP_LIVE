@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code Verification</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 offset-md-4 form">
+          <form action="" method="POST" autocomplete="off">
+            {% csrf_token %}
+            <h2 class="text-center">Auth Verification</h2>
+
+            {% if messages %} {% for message in messages %}
+            <div
+              class="alert alert-{{message.tags}} alert-dismissible fade show text-center"
+              role="alert"
+            >
+              {{message}}
+            </div>
+            {% endfor %} {% endif %}
+
+            <div class="form-group">
+              <input
+                class="form-control"
+                type="number"
+                name="otp"
+                placeholder="Enter verification code"
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                class="form-control button"
+                type="submit"
+                name="check"
+                value="Submit"
+              />
+            </div>
+            <p style="font-size:14px; color:red">"Click the button below to get the OTP!"</p>
+            <button
+              type="submit"
+              name="get-otp"
+              class="btn btn-warning mb-2"
+              onclick="sendOTP()"
+            >
+              Get OTP
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function sendOTP() {
+        // Implement the logic to send OTP via email here
+        let timerInterval;
+        Swal.fire({
+          title: 'Mail sent alert!',
+          html: 'OTP sent in <b></b> milliseconds.',
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector('b');
+            timerInterval = setInterval(() => {
+              b.textContent = Swal.getTimerLeft();
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer');
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

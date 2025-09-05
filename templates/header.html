@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold text-danger" href="/">Elite<span class="text-dark">Electronics</span></a>
+
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarContent" aria-controls="navbarContent"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Left Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'order' %}">Order</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+
+      <!-- Right Icons + Search -->
+      <div class="d-flex align-items-center gap-2 flex-wrap justify-content-end">
+        <!-- Wishlist Icon -->
+        <a href="/wishlist" class="btn btn-sm btn-outline-dark position-relative">
+          <i class="fa-solid fa-heart"></i>
+          {% if wishlist_items_count > 0 %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ wishlist_items_count }}
+            </span>
+          {% endif %}
+        </a>
+
+        <!-- Cart Icon -->
+        <a href="/cart" class="btn btn-sm btn-outline-dark position-relative">
+          <i class="fa-solid fa-cart-shopping"></i>
+          {% if cart_items_count > 0 %}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ cart_items_count }}
+            </span>
+          {% endif %}
+        </a>
+
+        <!-- Search -->
+        <form class="d-flex me-3 w-50">
+        <input class="form-control form-control-sm rounded-pill me-2 px-3" type="search" name="search" placeholder="Search" required>
+        <button class="btn btn-outline-success btn-sm" type="submit">Search</button>
+      </form>
+
+
+        <!-- User Auth Buttons -->
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'profile' %}" class="btn btn-sm btn-primary position-relative">
+            {{ request.user.get_full_name|default:request.user.username }}
+            <span class="position-absolute bg-danger rounded-circle notification-dot"
+              style="width: 8px; height: 8px; top: 2px; right: 2px;"></span>
+          </a>
+          <a href="{% url 'logout' %}" class="btn btn-sm btn-success">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-sm btn-success">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-sm btn-warning">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>

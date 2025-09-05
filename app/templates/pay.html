@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block body %}
+
+<!-- Loader Overlay -->
+<div id="payment-loader" style="
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(255,255,255,0.8); 
+    z-index: 9999; 
+    text-align: center;
+    padding-top: 20%;
+    font-size: 20px;
+    color: #333;
+">
+    <div class="spinner-border text-primary" role="status" style="width: 4rem; height: 4rem;"></div>
+    <p class="mt-3">Processing payment, please wait...</p>
+</div>
+
+<section class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">Pay with Razorpay</h3>
+        </div>
+        <div class="card-body text-center">
+            <p><strong>Total Amount:</strong> ₹{{total_cart_value}}</p>
+            <button id="rzp-button1" class="btn btn-success btn-lg">Pay Now</button>
+        </div>
+    </div>
+</section>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    var options = {
+        "key": "rzp_test_ZuZaFX2b9mXaAY",  // ✅ Replace with live key in production
+        "amount": {{ total_cart_value|floatformat:0 }}00,  // Amount in paise
+        "currency": "INR",
+        "name": "Elite Electronics",
+        "description": "Purchase Items",
+        "image": "https://yourstore.com/logo.png",  // Optional logo
+        "order_id": "{{ order_id }}",
+        "handler": function (response) {
+            // Show loader while processing
+            document.getElementById('payment-loader').style.display = 'block';
+
+            fetch("{% url 'payment_success' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hide loader
+                document.getElementById('payment-loader').style.display = 'none';
+
+                if (data.order_id) {
+                    alert("✅ Payment Successful! Thank you for your order.");
+                    window.location.href = "{% url 'home' %}?order_id=" + data.order_id;
+
+                } else {
+                    alert("⚠️ Payment was successful, but we couldn't confirm your order. Please contact support.");
+                }
+            })
+            .catch(error => {
+                document.getElementById('payment-loader').style.display = 'none';
+                console.error("❌ Network/Server Error:", error);
+                alert("❌ Payment processed, but something went wrong while confirming. Please contact support.");
+            });
+        },
+        "prefill": {
+            "name": "{{ user.username }}",
+            "email": "{{ user.email }}",
+            "contact": "{{ user.profile.phone_number }}"
+        },
+        "theme": {
+            "color": "#3399cc"
+        },
+        "modal": {
+            "ondismiss": function () {
+                alert("❌ Payment cancelled. Please try again.");
+            }
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button1').onclick = function(e) {
+        rzp1.open();
+        e.preventDefault();
+    };
+
+
+
+
+
+    
+</script>
+
+{% endblock body %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block body %}
+<!-- cart content -->
+<section id="cards" class='mt-4'>
+    <!-- title & subTitle -->
+    <div class="container mb-4">
+        <div class="text-center bg-body-secondary p-5 rounded">
+            <h1 class="fw-bold">Our cart</h1>
+            <p class="opacity-75">Picked items Collection by '{{user.username}}'</p>
+        </div>
+    </div>
+    <!-- content -->
+    <div class="container">
+        <div class="row d-flex justify-content-center flex-wrap gap-3">
+            {% if cart_items %}
+            {% for cart_item in cart_items %}
+                <div class="card p-3 position-relative" style="width: 18rem">
+                    <div class="position-absolute top-0 end-0 p-2">
+                        <form method="POST" class="float-end" action="{% url 'delete-cart-item' cart_item.id %}" class="d-flex gap-2">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit"><i class="fa-solid fa-xmark"></i></button>
+                        </form>
+                      </div>
+
+                      
+
+
+                    <img src="{{ cart_item.product.image.url }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cart_item.product.name }}</h5>
+                        <p class="card-text">
+                            {{ cart_item.product.description }}
+                        </p>
+                        <p clas="card-text">
+                            Price : ₹{{cart_item.product.price}}
+                        </p>
+                        <p class="cart-text">
+                           Quantity : {{cart_item.quantity}}
+                        </p>
+                        <p class="cart-text">
+                            Sub-total: ₹{{cart_item.sub_total}}
+                        </p>
+
+                        
+
+                        <!-- Quantity -->
+                    <div class="d-flex mb-4" style="max-width: 300px">
+                    <form method="POST"  action="{% url 'update-cart' cart_item.id %}" class="d-flex">
+                        {% csrf_token %}
+                        <button class="btn btn-primary px-3 me-2"
+                        type="submit"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    
+                        <div class="form-outline">
+                            <input id="form1" min="0" max="10" name="quantity" value="{{cart_item.quantity}}" type="number" class="form-control"/>
+                        </div>
+                    
+                        <button class="btn btn-primary px-3 ms-2"
+                        type="submit"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                        </button>
+                    </form>
+                  </div>
+                  <!-- Quantity -->
+  
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="container my-4">
+            <h3 class='text-center p-3 border shadow'>No products picked yet.</h3>
+        </div>
+        {% endif %}
+        
+        </div>
+    </div>
+    <!--cart main -->
+    <div class="container my-4">
+        <div class="text-center bg-body-secondary p-5 rounded">
+            <h3 class="fw-bold">Grand-Total : ₹{{total_cart_value}}</h3>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mx-auto mt-2">
+                <a href="/" class="btn btn-secondary btn-lg" type="button">Continue to Shopping</a>
+                <form method="post" action="{% url 'checkout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg" {% if not cart_items %} disabled {% endif %}>Procced to Checkout</button>
+                </form>
+              </div>
+        </div>
+    </div>
+</section>
+<!-- cart content -->
+{% endblock body %}

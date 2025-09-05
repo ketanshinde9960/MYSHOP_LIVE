@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container">
+  <div class="main-body">
+    <div class="row gutters-sm my-4">
+
+      <!-- Left Card: Profile Info -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body text-center">
+            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" 
+                 alt="Profile" class="rounded-circle img-fluid" width="150">
+            <h4 class="mt-3">{{ user_data.username }}</h4>
+            <p class="text-secondary">{{ user_data.email }}</p>
+            <div class="mt-2">
+              <button class="btn btn-primary">Follow</button>
+              <a href="{% url 'logout' %}" class="btn btn-outline-primary">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Card: Profile Details -->
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+
+            <!-- User Details -->
+            <h5>User Details</h5>
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>Username</h6></div>
+              <div class="col-sm-9">{{ user_data.username }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>Email</h6></div>
+              <div class="col-sm-9">{{ user_data.email }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>First Name</h6></div>
+              <div class="col-sm-9">{{ user_data.first_name }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>Last Name</h6></div>
+              <div class="col-sm-9">{{ user_data.last_name }}</div>
+            </div>
+
+            <hr>
+
+            <!-- Address Details -->
+            <h5>Address</h5>
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>Address</h6></div>
+              <div class="col-sm-9">{{ user_address.address|default:"No address" }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>Mobile</h6></div>
+              <div class="col-sm-9">{{ user_address.mobile|default:"No mobile" }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>City</h6></div>
+              <div class="col-sm-9">{{ user_address.city|default:"No city" }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>State</h6></div>
+              <div class="col-sm-9">{{ user_address.state|default:"No state" }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-sm-3"><h6>Postal Code</h6></div>
+              <div class="col-sm-9">{{ user_address.zip_code|default:"No postal code" }}</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="container my-5">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-5 fw-bold lh-1 text-body-emphasis mb-4">Elite Electronics Pvt. Ltd.</h1>
+
+        <p class="lead mb-5">
+          Elite Electronics Pvt. Ltd. was founded with a vision to redefine technology and innovation. More than just an electronics store, we are committed to delivering high-quality, reliable, and cutting-edge products that seamlessly integrate into your daily life.
+
+          Our journey began with a simple yet powerful mission—to provide the latest gadgets and essential tech solutions while ensuring exceptional service and trust.
+          
+          With a relentless focus on excellence and customer satisfaction, Elite Electronics continues to grow, bringing you the best in smart devices, home appliances, and beyond. We believe in making life smarter, more connected, and future-ready.
+          With a focus on excellence and customer satisfaction, Elite Electronics continues to grow, bringing you the best in technology, from smart devices to home appliances. We believe in making your life easier, more connected, and powered for the future.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Shop Now</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Learn More</button>
+        </div>
+      </div>
+      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+          <img class="rounded-lg-3" src="{% static 'images/electronics-store.png' %}" alt="Electronics Store" width="820">
+      </div>
+    </div>
+</div>
+{% endblock body %}

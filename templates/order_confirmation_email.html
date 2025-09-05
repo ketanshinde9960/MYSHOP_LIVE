@@ -1,0 +1,76 @@
+<!-- your_project/templates/order_confirmation_email.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        section {
+            padding: 30px;
+            color: #333;
+        }
+
+        footer {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Order Confirmation</h1>
+        </header>
+        <section>
+            <p>Hello <strong>{{ client_name }}</strong>,</p>
+            <p>Thank you for ordering Electronics products from our website! Your order details are as follows:</p>
+            <ul>
+                <li>Order ID: {{ order_id }}</li>
+                <li>Order Date: {{ order_date }}</li>
+                <!-- Add more order details here -->
+            </ul>
+            <p>We appreciate your business and hope you enjoy your new Electronics items .</p>
+            <p>If you have any questions or concerns, feel free to <a href="mailto:your_email@example.com">contact us</a>.</p>
+        </section>
+        <footer>
+            <p>Thank you for shopping with us keep exploring do shopping!</p>
+        </footer>
+    </div>
+</body>
+</html>
