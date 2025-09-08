@@ -16,8 +16,7 @@ class Auth(models.Model):
     def __str__(self):
         return self.user.username
     
-#------------------------------------------------------------------------------------------------------------
-
+#-------------------------------------------------------------------------------
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField()
@@ -31,7 +30,7 @@ class Address(models.Model):
     def __str__(self):
         return f"{self.username} - {self.city}, {self.state}"
 
- ################################################################################################   
+ ###############################################################################
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -41,7 +40,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-#################################################################################
+################################################################################
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
